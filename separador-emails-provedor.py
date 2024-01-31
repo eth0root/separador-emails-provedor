@@ -32,8 +32,8 @@ from colorama import Fore
 colorama.init(autoreset=True)
 
 providers = {
-    "@globo.com.br": "globo.txt",
-    "@gmail.com": "gmail.txt",
+    "@globo.com.br": "globo.com.br.txt",
+    "@gmail.com": "gmail.com.txt",
     "@outlook.com": "outlook.com.txt",
     "@yahoo.com": "yahoo.com.txt",
     "@yahoo.com.br": "yahoo.com.br.txt",
@@ -57,11 +57,11 @@ def get_test():
                 print("\n\033[1;91mErro: O caminho da lista não pode ser vazio. Por favor, insira o caminho corretamente.\033[1;m\n")
                 combo = input("Digite o caminho da lista de e-mails (.txt): -> ")
 
-            with open(combo, "rb") as arquivo:
-                file = arquivo.read().decode("latin-1")  # Decodifica a sequência de bytes usando a codificação "latin-1"
-                file = file.splitlines()
-                for line in file:
+            with open(combo, "r", encoding="latin-1") as arquivo:
+                for line in arquivo:
                     try:
+                        line = line.strip()  # Remover espaços em branco no início e no final da linha
+
                         for provider, filename in providers.items():
                             if provider in line.lower() and line not in processed_items:
                                 with open(filename, 'a', encoding="utf8") as file2:
